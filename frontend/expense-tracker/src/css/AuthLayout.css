@@ -1,0 +1,135 @@
+.auth-main-section {
+  display: flex;
+  margin: 0px 0px 0 0px;
+  gap: 30px;
+  height: 90vh;
+  margin-bottom: 0;
+}
+.auth-right-section {
+  background-color: #f3e8ff;
+  width: 43%;
+  padding-top: 30px;
+}
+.auth-left-section {
+  padding-top: 30px;
+  padding-left: 30px;
+  width: 55%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  background: linear-gradient(135deg, #e9e3ff, #f9fafb);
+}
+
+.auth-left-section-header {
+  padding-bottom: 50px;
+}
+
+.auth-left-section .first-box-section{
+  width: 100px;
+  height: 80px;
+  background-color: #8e10f7;
+  position: absolute;
+  top: 90px;
+  z-index: 0;
+  border-radius: 10px;
+  transform: translate(30px, 35px);
+  opacity: 0.8;
+  left: 40px;
+}
+
+.auth-left-section .second-box-section {
+   width: 100px;
+  height: 80px;
+  background-color: #8e10f7;
+  position: absolute;
+  top: 90px;
+  z-index: 0;
+  border-radius: 10px;
+  transform: translate(30px, 35px);
+  opacity: 0.8;
+  left: 76%;
+}
+
+.auth-left-section .statsInfoCard {
+  width: 80%;
+  align-self: center;
+  padding-bottom: 50px;
+  z-index: 2;
+}
+
+.stats-card {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  background-color: #fff;
+  padding: 15px 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.stats-card .icon {
+  background-color: #7a53ef;
+  border-radius: 100%;
+  padding: 7px;
+}
+
+.stats-card .stats-card-info h6 {
+  color: #353535bd;
+  padding-bottom: 8px;
+  font-size: 12px;
+}
+
+.stats-card .stats-card-info span {
+  font-weight: 700;
+  letter-spacing: 1.3px;
+  font-size: 17px;
+  color: green;
+}
+.auth-left-section .hero-section {
+  width: 99%;
+  background-color: #8f10f7c5;
+  display: flex;
+  justify-content: center;
+  padding: 5px 0;
+  border-radius: 20px;
+  margin-top: 70px;
+  height: 460px;
+  /* margin-left: -10px; */
+}
+
+.auth-left-section .hero-image {
+  width: 98%;
+  border-radius: 10px;
+  /* height: 100%; */
+    object-fit: cover;
+    height: 100%;
+}
+
+.marquee {
+  width: 100%;
+  background-color: #f3e8ff;
+  color: #4b0082;
+  font-weight: 600;
+  font-size: 16px;
+  padding: 10px 0;
+  border-radius: 6px;
+  margin-top: 20px;
+  white-space: nowrap;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.marquee .marquee-content {
+  display: inline-block;
+  padding-left: 100%;
+  animation: scrollText 10s linear infinite;
+}
+
+@keyframes scrollText {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
