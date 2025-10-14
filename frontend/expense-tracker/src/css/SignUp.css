@@ -47,3 +47,11 @@
     transition: transform 0.3s ease, opacity 0.3s ease; /* image transition */
  
 }
+
+.error-paragraph{
+  color: red;
+  font-size: 13px;
+}
+.error-border {
+  border-color: red !important;
+}
