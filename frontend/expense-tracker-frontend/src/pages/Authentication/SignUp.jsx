@@ -183,7 +183,7 @@ export default function SignUp() {
             SIGN UP
           </button>
           <p className="sign-up-page">
-            <strong>
+            <strong>  
               Already have an account? <Link to="/login">Login</Link>
             </strong>
           </p>
