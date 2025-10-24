@@ -1,26 +1,33 @@
-const mongoose = require("mongoose");
-const bcrypt = require("bcryptjs");
+import bcrypt from "bcryptjs";
+import { sql } from "../config/db.js"; // from your Neon/PostgreSQL connection
 
-const userSchema = new mongoose.Schema(
-  {
-    fullName: { type: String, required: true },
-    email: { type: String, required: true, unique: true },
-    password: { type: String, required: true },
-    profileImageUrl: { type: String, default: null },
-  },
-  { timestamps: true }
-);
+// create new user
+export async function createUser(
+  fullName,
+  email,
+  password,
+  profileImageUrl = null
+) {
+  // Hash password before saving
+  const hashedPassword = await bcrypt.hash(password, 10);
 
-// Hash password before saving
-userSchema.pre("save", async function (next) {
-  if (!this.isModified("password")) return next();
-  this.password = await bcrypt.hash(this.password, 10);
-  next();
-});
+  const result = await sql`
+    INSERT INTO user_details (full_name, email, password, profile_image_url)
+    VALUES (${fullName}, ${email}, ${hashedPassword}, ${profileImageUrl})
+    RETURNING id, full_name, email, profile_image_url, created_at;
+  `;
+  return result[0]; // Return the created user
+}
+
+// Find user by email
+export async function findUserByEmail(email) {
+  // console.log('Looking for email: ', email)
+  const result = await sql`SELECT * FROM user_details WHERE email =(${email})`;
+  // console.log("Results: ", result);
+  return result[0];
+}
 
 // Compare password
-userSchema.methods.comparePassword = async function (candidatePassword) {
-  return await bcrypt.compare(candidatePassword, this.password);
-};
-
-module.exports = mongoose.model("user", userSchema);
+export async function comparePassword(plainPassword, hashedPassword) {
+  return await bcrypt.compare(plainPassword, hashedPassword);
+}
