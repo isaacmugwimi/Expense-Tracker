@@ -1,12 +1,11 @@
 import jwt from "jsonwebtoken";
+import upload from "../middleware/uploadMiddleware.js";
 import {
+  comparePassword,
   createUser,
   findUserByEmail,
-  comparePassword,
-} from "../models/user.js";
-import { request, response } from "express";
-import upload from "../middleware/uploadMiddleware.js";
-import { findUserById, sql } from "../config/db.js";
+  findUserById,
+} from "../config/db.js";
 
 // Generate JWT token
 const generateToken = (id) => {
