@@ -1,37 +1,34 @@
-import {
-  addIncomeRecord,
-  findIncomeDetails,
-  findUserByIdAndDeleteIncome,
-} from "../models/income.db.js";
-
 import xlsx from "xlsx";
 import fs from "fs";
 import path from "path";
+import { addExpenseRecord } from "../models/expense.db.js";
+import { findExpenseDetails } from "../models/expense.db.js";
+import { findUserByIdAndDeleteExpense } from "../models/expense.db.js";
 
 // ========================================
-// 🔹 Add Income
+// 🔹 Add Expense
 // ========================================
-export const addIncome = async (request, response) => {
+export const addExpense = async (request, response) => {
   const user_id = request.user.id;
   try {
-    const { icon, source, amount, date } = request.body;
+    const { icon, category, amount, date } = request.body;
     // validation: Check for missing fields
-    if (!source || !amount || !date) {
+    if (!category || !amount || !date) {
       return response.status(400).json({ message: "All fields are required!" });
     }
 
     // insert into DB
-    const newIncome = await addIncomeRecord(
+    const newExpense = await addExpenseRecord(
       user_id,
       icon,
-      source,
+      category,
       amount,
       date
     );
 
     response
       .status(200)
-      .json({ message: "Income added Successfully", income: newIncome });
+      .json({ message: "Expense added Successfully", expense: newExpense });
   } catch (error) {
     console.error("Server Error", error);
     response.status(500).json({ message: "Server error" });
@@ -39,16 +36,14 @@ export const addIncome = async (request, response) => {
 };
 
 // ========================================
-// 🔹 Get All Income
+// 🔹 Get All Expense
 // ========================================
-export const getAllIncome = async (request, response) => {
+export const getAllExpense = async (request, response) => {
   // Get the user ID
   const userId = request.user.id;
-  // console.log("this is user: ",user)
-  console.log("this is userid: ", userId);
   try {
-    const income = await findIncomeDetails(userId);
-    response.json(income);
+    const expense = await findExpenseDetails(userId);
+    response.json(expense);
   } catch (error) {
     console.log(error);
     response.status(500).json({ message: "server error!" });
@@ -56,22 +51,22 @@ export const getAllIncome = async (request, response) => {
 };
 
 // ========================================
-// 🔹 Delete Income
+// 🔹 Delete Expense
 // ========================================
-export const deleteIncome = async (request, response) => {
+export const deleteExpense = async (request, response) => {
   const userId = request.user.id;
-  const incomeId = Number(request.params.id);
+  const expenseId = Number(request.params.id);
 
   try {
-    const deleted = await findUserByIdAndDeleteIncome(incomeId, userId);
+    const deleted = await findUserByIdAndDeleteExpense(expenseId, userId);
     if (!deleted) {
       return response
         .status(404)
-        .json({ message: "Income not found or unauthorized" });
+        .json({ message: "Expense not found or unauthorized" });
     }
     response
       .status(200)
-      .json({ message: "Income Deleted Successfully", deleted });
+      .json({ message: "Expense Deleted Successfully", deleted });
   } catch (error) {
     response
       .status(500)
@@ -81,24 +76,46 @@ export const deleteIncome = async (request, response) => {
 };
 
 // ========================================
-// 🔹 Download imcome Excel
+// 🔹 Download Expense Excel
 // ========================================
-export const downloadIncomeExcel = async (request, response) => {
+export const downloadExpenseExcel = async (request, response) => {
   const userId = request.user.id;
   try {
-    const income = await findIncomeDetails(userId);
-    // Check if user has any income records
-    if (!income || income.length === 0) {
+    const expense = await findExpenseDetails(userId);
+    // Check if user has any expense records
+    if (!expense || expense.length === 0) {
       return response
         .status(404)
-        .json({ message: "No income records found for this user" });
+        .json({ message: "No expense records found for this user" });
     }
     // Prepare data for excel
-    const data = income.map((item) => ({
-      Source: item.source,
-      Amount: item.amount,
-      Date: item.date,
-    }));
+    const data = expense.map((item) => {
+      // instantiate date object
+      const dateObj = new Date(item.date);
+
+      // Format date as dd/mm/yyyy
+      const formattedDate = dateObj
+        .toLocaleDateString("en-GB",{timeZone:"Africa/Nairobi"})
+        .replace(/\//g, "/");
+      // en-GB gives dd/mm/yyyy format
+
+      // Format time as hour/minute/second (24-hour format)
+      const formattedTime = dateObj
+        .toLocaleTimeString("en-GB", {
+          timeZone:"Africa/Nairobi",
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
+          hour12: false, // 24-hour format
+        })
+        .replace(/:/g, "/");
+      return {
+        category: item.category,
+        Amount: item.amount,
+        Date: formattedDate,
+        Time: formattedTime,
+      };
+    });
 
     // ✅ Create workbook and worksheet correctly
     //  wb - workbook
@@ -106,10 +123,11 @@ export const downloadIncomeExcel = async (request, response) => {
     const wb = xlsx.utils.book_new();
     const ws = xlsx.utils.json_to_sheet(data);
 
-    xlsx.utils.book_append_sheet(wb, ws, "Income");
+    xlsx.utils.book_append_sheet(wb, ws, "Expense");
 
     // ✅ Create export folder if it doesn’t exist
-    const exportDir = path.join(process.cwd(), "excel_exports");
+    const exportedDir = path.join(process.cwd(), "excel_exports");
+    const exportDir = path.join(exportedDir, "expense_excel_exports");
     // path.join() is used to combine multiple folder and file names into a single valid file path
     // cwd is the current working directory
     // process.cwd() is the base directory
@@ -122,7 +140,7 @@ export const downloadIncomeExcel = async (request, response) => {
     }
 
     // ✅ Generate unique filename inside the "excel_exports"
-    const fileName = `income_details_${userId}_${Date.now()}.xlsx`;
+    const fileName = `expense_details_${userId}_${Date.now()}.xlsx`;
     const filePath = path.join(exportDir, fileName);
 
     // Write File

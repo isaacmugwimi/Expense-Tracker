@@ -4,10 +4,13 @@ import express from "express";
 import cors from "cors";
 import authRoutes from "./routes/authRoutes.js";
 import incomeRoutes from "./routes/incomeRoutes.js";
+import expenseRoutes from "./routes/expenseRoutes.js";
+import dashboardRoutes from "./routes/dashboardRoutes.js";
 import { initDB } from "./config/db.js";
 import path from "path";
 import { fileURLToPath } from "url";
 import { createIncomeTable } from "./models/income.db.js";
+import { createExpenseTable } from "./models/expense.db.js";
 
 const __filename = fileURLToPath(import.meta.url); //Gets the absolute path of the current file
 const __dirname = path.dirname(__filename); // Gets the directory the file is in
@@ -27,8 +30,13 @@ app.use(
 
 app.use(express.json());
 await createIncomeTable();
+await createExpenseTable();
 app.use("/api/auth", authRoutes);
 app.use("/api/income", incomeRoutes);
+app.use("/api/expense", expenseRoutes);
+app.use("/api/dashboard", dashboardRoutes);
+
+
 // serve uploads folder statically
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 // uploads: name of the subfolder in the backend you want to reach

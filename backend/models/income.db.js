@@ -18,7 +18,7 @@ export async function createIncomeTable() {
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
   );
 `;
-    console.log("Income table is ready");
+    // console.log("Income table is ready");
   } catch (error) {
     console.error("Error in creating income table: ", error);
   }
@@ -32,6 +32,25 @@ export async function addIncomeRecord(user_id, icon, source, amount, date) {
   const result = await sql`
     INSERT INTO income(user_id, icon, source,amount, date) values(${user_id}, ${icon}, ${source},${amount}, ${date}) RETURNING *
     `;
-    return result[0] //return the  inserted income row
-    
+  return result[0]; //return the  inserted income row
+}
+
+// ========================================
+// 🔹 get income details
+// ========================================
+export async function findIncomeDetails(userId) {
+  // Query incomes for this user, sorted by date descending
+  const result =
+    await sql`SELECT * FROM income WHERE user_id = ${userId} ORDER BY date DESC `;
+  return result;
+}
+
+// ========================================
+// 🔹 Delete income details
+// ========================================
+export async function findUserByIdAndDeleteIncome(incomeId, userId) {
+  const result = await sql` DELETE FROM income
+    WHERE id = ${incomeId}  AND user_id = ${userId}
+    RETURNING *`;
+  return result[0];
 }
