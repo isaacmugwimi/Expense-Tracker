@@ -23,6 +23,6 @@ export const API_PATHS={
         DOWNLOAD_EXPENSE:"/api/expense/downloadexcel"
     },
     IMAGE:{
-        UPLOAD_IMAGE:"/uploads/upload-image"
+        UPLOAD_IMAGE:"/api/auth/upload-image"
     }
 }

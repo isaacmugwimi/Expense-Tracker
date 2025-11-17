@@ -1,58 +1,64 @@
-.login-page{
-    display: flex;
-    flex-direction: column;
-    padding-left: 20px;
-
+.login-page {
+  display: flex;
+  flex-direction: column;
+  padding-left: 20px;
 }
 
-.login-page .login-title{
-    margin-top: 40px;
-    text-align: center;
+.login-page .login-title {
+  margin-top: 40px;
+  text-align: center;
 }
 
-.login-page form{
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    padding: 0 20px;
-    margin-top: 10px;
+.login-page form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding: 0 20px;
+  margin-top: 10px;
 }
 
-.login-page .login-p{
-    margin-top: 40px;
-    font-size: 16px;
-    padding-bottom: 20px;
+.login-page .login-p {
+  margin-top: 40px;
+  font-size: 16px;
+  padding-bottom: 20px;
 }
-.login-page form .label{
-    font-weight: 600;
-    font-size: 15px;
-    padding-bottom: 0;
-}
-
-.login-page form .inputs{
-    padding: 13px 10px;
-    font-size: 15px;
-    outline: none;
-    background-color: rgba(128, 0, 128, 0.144);
-    border: none;
-    letter-spacing: 1.4px;
-    font-weight: 600;
-    border-radius: 10px;
-    margin-bottom: 20px;
-    border: 1px solid rgba(128, 0, 128, 0.144);
+.login-page form .label {
+  font-weight: 600;
+  font-size: 15px;
+  padding-bottom: 0;
 }
 
-.login-page form .login-btn{
-    padding: 10px 0;
-    border-radius: 10px;
-    outline: none;
-    font-size: 15px;
-    background-color: #A643F8;
-    color: white;
-    border: 1px solid #A643F8;
-
+.login-page form .inputs {
+  padding: 13px 10px;
+  font-size: 15px;
+  outline: none;
+  background-color: rgba(128, 0, 128, 0.144);
+  border: none;
+  letter-spacing: 1.4px;
+  font-weight: 600;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  border: 1px solid rgba(128, 0, 128, 0.144);
 }
 
-.login-page form .sign-up-page{
-    font-size: 14px;
+.login-page form .login-btn {
+  padding: 10px 0;
+  border-radius: 10px;
+  outline: none;
+  font-size: 15px;
+  background-color: #a643f8;
+  color: white;
+  border: 1px solid #a643f8;
+}
+
+.login-page form .sign-up-page {
+  font-size: 14px;
+}
+
+.error-paragraph {
+  color: red;
+  font-size: 13px;
+}
+.error-border {
+  border-color: red !important;
 }

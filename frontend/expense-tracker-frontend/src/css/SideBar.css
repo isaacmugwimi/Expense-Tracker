@@ -1,0 +1,112 @@
+.main-side-bar {
+  display: flex;
+  flex-direction: column;
+  width: 25%;
+  height: 93vh;
+  border: 1px solid #ccc;
+  background-color: #fefefe;
+  padding: 10px 30px 10px 30px;
+}
+
+.profile-pic-menu {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding: 30px 0;
+}
+
+.side-menu-buttons {
+  padding: 10px 15px;
+  font-size: 15px;
+  border: none;
+  margin-top: 20px;
+  border-radius: 10px;
+  display: flex;
+  width: 100%;
+  border: 2px solid white;
+}
+.side-menu-buttons:hover {
+  background-color: #7c52f4;
+  cursor: pointer;
+  color: white;
+  border: 2px solid orange;
+}
+.inside-button-div {
+  display: flex;
+  margin-left: 30%;
+  align-items: center;
+  gap: 10px;
+}
+.item-icon {
+  font-size: 24px;
+}
+
+.profile-img {
+  width: 150px;
+  /* height: 70px; */
+  border-radius: 50%;
+  object-fit: cover;
+}
+.profile-pic-name {
+  font-weight: 700;
+  font-size: 18px;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  padding-top: 10px;
+}
+
+/* modal css */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.modal {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  padding: 20px;
+  border-radius: 10px;
+  width: 400px;
+  color: #111827;
+}
+.delete-btns{
+  display: flex;
+  gap: 20px;
+  padding-top: 20px;
+  margin-top: 20px;
+}
+
+.logout {
+  background: #ef4444;
+  color: white;
+  padding: 10px 30px;
+  border-radius: 10px;
+  outline: none;
+  border: 1px solid orange;
+  cursor: pointer;
+}
+
+.logout:hover {
+  background: #dc2626;
+}
+
+.cancel {
+  background: #f3f4f6;
+  color: #374151;
+  padding: 10px 30px;
+  border-radius: 10px;
+  outline: none;
+  border: 1px solid orange;
+  cursor: pointer;
+}
+.cancel:hover {
+  background: #e5e7eb;
+}

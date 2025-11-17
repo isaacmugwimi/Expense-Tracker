@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { AuthLayout } from "../../components/layouts/AuthLayout";
 import user_pic from "../../assets/profile-pics/user.svg";
 import upload from "../../assets/profile-pics/upload.svg";
 import delete_icon from "../../assets/profile-pics/trash-2.svg";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "../../css/Login.css";
 import "../../css/SignUp.css";
 import {
@@ -11,11 +11,20 @@ import {
   validateName,
   validatePassword,
 } from "../../utils/helper";
+import axiosInstance from "../../utils/axiosInstance";
+import { API_PATHS } from "../../utils/apiPaths";
+import UserContext from "../../context/UserContext";
+import uploadImage from "../../utils/uploadImage";
 //
 //
+
 export default function SignUp() {
+  const navigate = useNavigate();
+  const { updateUser } = useContext(UserContext);
+
   // State to store the uploaded image
-  const [profilePic, setProfilePic] = useState(null);
+    const [profilePicFile, setProfilePicFile] = useState(null);
+  const [profilePicPreview, setProfilePicPreview] = useState(null);
   const [error, setError] = useState({
     field: "",
     message: "",
@@ -29,21 +38,26 @@ export default function SignUp() {
   const handleProfilePicChange = (e) => {
     const file = e.target.files[0];
     if (file) {
+      setProfilePicFile(file); // store actual file for upload
+
       const reader = new FileReader();
       reader.onloadend = () => {
-        setProfilePic(reader.result); // Convert image to base64 string for preview
+        setProfilePicPreview(reader.result); // base64 string for preview
       };
       reader.readAsDataURL(file);
     }
   };
   const handleDeleteProfilePic = (e) => {
     e.preventDefault();
-    setProfilePic(null);
+    setProfilePicFile(null);
+    setProfilePicPreview(null)
   };
 
-  const handleSignUp = (e) => {
+  const handleSignUp = async (e) => {
     e.preventDefault();
     setError({ field: "", message: "" }); //clear old error
+
+    let profileImageUrl = "";
 
     const { fullName, email, password } = formData;
 
@@ -70,6 +84,35 @@ export default function SignUp() {
       setError({ field: "password", message: passwordResult });
       return;
     }
+
+    // ========================================
+    // 🔹 Sign up api call
+    // ========================================
+    try {
+      // upload image if present
+      if (profilePicFile) {
+        const imageUploadResponse = await uploadImage(profilePicFile);
+        profileImageUrl = imageUploadResponse.imageUrl || "";
+      }
+      const response = await axiosInstance.post(API_PATHS.AUTH.REGISTER, {
+        fullName,
+        email,
+        password,
+        profileImageUrl,
+      });
+      const { token, user } = response.data;
+      if (token) {
+        localStorage.setItem("token", token);
+        updateUser(user);
+        navigate("/login");
+      }
+    } catch (error) {
+      if (error.response && error.response.data.message) {
+        setError(error.response.data.message);
+      } else {
+        setError("Something went wrong try again.");
+      }
+    }
   };
 
   const handleChange = (e) => {
@@ -90,15 +133,14 @@ export default function SignUp() {
         <div className="profile-pic-section">
           {/* profile pic goes here */}
           <label htmlFor="profile-pic-upload" className="profile-pic-label">
-            {profilePic ? (
-              <>
-                {" "}
+            {profilePicPreview ? (
+              
                 <img
-                  src={profilePic}
+                  src={profilePicPreview}
                   alt="Profile Preview"
                   className="profile-pic-preview"
                 />
-              </>
+              
             ) : (
               <div className="placeholder-circle">
                 <img src={user_pic} alt="" />
@@ -106,12 +148,12 @@ export default function SignUp() {
             )}{" "}
             <div
               className="upload-icon"
-              onClick={profilePic ? handleDeleteProfilePic : undefined}
-              style={{ background: profilePic ? "#ff4d4d" : "" }}
+              onClick={profilePicPreview ? handleDeleteProfilePic : undefined}
+              style={{ background: profilePicPreview ? "#ff4d4d" : "" }}
             >
               <img
-                src={profilePic ? delete_icon : upload}
-                alt={profilePic ? "Delete" : "Upload"}
+                src={profilePicPreview ? delete_icon : upload}
+                alt={profilePicPreview ? "Delete" : "Upload"}
               />
             </div>
           </label>
@@ -129,7 +171,7 @@ export default function SignUp() {
          */}
         {/*
          */}
-        <form action="">
+        <form onSubmit={handleSignUp}>
           <label className="label" htmlFor="">
             Full Name
           </label>
@@ -183,7 +225,7 @@ export default function SignUp() {
             SIGN UP
           </button>
           <p className="sign-up-page">
-            <strong>  
+            <strong>
               Already have an account? <Link to="/login">Login</Link>
             </strong>
           </p>
