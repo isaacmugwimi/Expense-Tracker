@@ -1,9 +1,10 @@
 import React, { useContext } from "react";
 import { useState } from "react";
-
+import "../../css/DashboardLayout.css"
 import Navbar from "./Navbar";
 import SideMenu from "./SideMenu";
 import UserContext from "../../context/UserContext";
+
 export default function DashBoardLayout({ activeMenu, children }) {
   const { user } = useContext(UserContext);
   const [openSideMenu, setOpenSideMenu] = useState(false);
@@ -26,7 +27,7 @@ export default function DashBoardLayout({ activeMenu, children }) {
               <SideMenu activeMenu={activeMenu} />
             </div>
           )}
-          <div className="dashboard-right-section">{children}</div>
+          <div className={`dashboard-right-section ${openSideMenu?"with-sidebar": "full-width"}`}>{children}</div>
         </>
       )}
     </div>

@@ -1,0 +1,41 @@
+.dashboard-stats-card {
+  background-color: white;
+  width: 30%;
+  display: flex;
+  gap: 10px;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.icon-section {
+  color: white;
+  background-color: #7a53f2;
+  padding: 5px;
+  border-radius: 100%;
+  font-size: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.stats-info {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  /* margin-left: 5px; */
+}
+
+.stats-info h6 {
+  font-size: 14px;
+  font-weight: 600;
+  color: gray;
+}
+.stats-info span {
+  font-size: 20px;
+  font-weight: 600;
+  color: green;
+}
+
+.expense-card{
+    color: white;
+    background-color: red;
+}

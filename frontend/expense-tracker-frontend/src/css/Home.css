@@ -1,0 +1,15 @@
+
+.dashboard-section{
+    padding: 20px;
+}
+    
+
+.main-homepage{
+    display: flex;
+    gap: 20px;
+    justify-content: space-between;
+} 
+
+.expense-card{
+    background-color: red;
+}

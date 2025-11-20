@@ -54,3 +54,43 @@ export async function findUserByIdAndDeleteIncome(incomeId, userId) {
     RETURNING *`;
   return result[0];
 }
+
+
+// ========================================
+// 🔹 function to add income
+// ========================================
+export async function getTotalIncome(userId) {
+  const results = await sql `SELECT COALESCE(SUM(amount), 0) AS total_income
+    FROM income
+    WHERE user_id = ${userId}`
+
+    return results[0].total_income
+  
+}
+
+// ========================================
+// 🔹 function to get income transactions in the last 60 days
+// ========================================
+
+export async function getLast60DaysIncome(userId) {
+  const results = await sql`
+    SELECT *
+    FROM income
+    WHERE user_id = ${userId}
+      AND date >= NOW() - INTERVAL '60 days'
+    ORDER BY date DESC;
+  `;
+  
+  return results;
+}
+
+export async function getLast60DaysIncomeTotal(userId) {
+   const result = await sql`
+    SELECT COALESCE(SUM(amount), 0) AS total_last_60_days
+    FROM income
+    WHERE user_id = ${userId}
+      AND date >= NOW() - INTERVAL '60 days';
+  `;
+
+  return result[0].total_last_60_days;
+}

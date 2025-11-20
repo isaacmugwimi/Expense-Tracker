@@ -30,3 +30,23 @@ export const validateName = (fullName) => {
 
   return true;
 };
+
+// a utility to format numbers with commas as thousand separators.
+
+export const addThousandSeparator = (num) => {
+  if (num == null || isNaN(num)) return "";
+  const [integerPart, fractionalPart] = num.toString().split("."); //Split integer and decimal parts
+
+  const formattedInteger = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+  //   \B → not a word boundary. Prevents adding a comma at the start.
+
+  // (?=(\d{3})+(?!\d)) → positive lookahead: match positions where there are groups of 3 digits ahead, but not beyond the last digit.
+
+  // g → global, replaces all matches.
+  // e.g "1234567".replace(/\B(?=(\d{3})+(?!\d))/g, ",") -> "1,234,567"
+
+  return fractionalPart
+    ? `${formattedInteger}.${fractionalPart}`
+    : formattedInteger;
+};

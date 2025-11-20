@@ -21,7 +21,7 @@ export async function createExpenseTable() {
 }
 
 // ========================================
-// 🔹 insert new income row
+// 🔹 insert new expense row
 // ========================================
 
 export async function addExpenseRecord(user_id, icon, category, amount, date) {
@@ -42,11 +42,49 @@ export async function findExpenseDetails(userId) {
 }
 
 // ========================================
-// 🔹 Delete income details
+// 🔹 Delete expense details
 // ========================================
 export async function findUserByIdAndDeleteExpense(expenseId, userId) {
   const result = await sql` DELETE FROM expense
     WHERE id = ${expenseId}  AND user_id = ${userId}
     RETURNING *`;
   return result[0];
+}
+// ========================================
+// 🔹 function to add expense
+// ========================================
+export async function getTotalExpense(userId) {
+  const results = await sql `SELECT COALESCE(SUM(amount), 0) AS total_expense
+    FROM expense
+    WHERE user_id = ${userId}`
+
+    return results[0].total_expense
+  
+}
+
+// ========================================
+// 🔹 function to get expense transactions in the last 60 days
+// ========================================
+
+export async function getLast30DaysExpense(userId) {
+  const results = await sql`
+    SELECT *
+    FROM expense
+    WHERE user_id = ${userId}
+      AND date >= NOW() - INTERVAL '30 days'
+    ORDER BY date DESC;
+  `;
+  
+  return results;
+}
+
+export async function getLast30DaysExpenseTotal(userId) {
+   const result = await sql`
+    SELECT COALESCE(SUM(amount), 0) AS total_last_30_days
+    FROM expense
+    WHERE user_id = ${userId}
+      AND date >= NOW() - INTERVAL '30 days';
+  `;
+
+  return result[0].total_last_30_days;
 }

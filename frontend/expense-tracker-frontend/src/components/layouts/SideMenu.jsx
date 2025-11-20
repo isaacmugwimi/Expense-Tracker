@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import UserContext from "../../context/UserContext";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { SIDE_MENU_DATA } from "../../utils/data";
 import "../../css/SideBar.css";
 
@@ -8,11 +8,11 @@ const SideMenu = () => {
   const { user, clearUser } = useContext(UserContext);
   const [deleteModal, setDeleteModal] = useState(null);
   const navigate = useNavigate();
-  console.log("User in SideMenu: ", user);
+  const location = useLocation();
   const handleClick = (route) => {
     if (route === "/logout") {
       // handleLogout();
-      setDeleteModal(true)
+      setDeleteModal(true);
       return;
     }
     navigate(route);
@@ -43,7 +43,9 @@ const SideMenu = () => {
           <button
             key={`menu_${index}`}
             onClick={() => handleClick(item.path)}
-            className="side-menu-buttons"
+            className={`side-menu-buttons ${
+              location.pathname === item.path ? "active-menu" : ""
+            }`}
           >
             <div className="inside-button-div">
               {" "}
@@ -56,15 +58,21 @@ const SideMenu = () => {
       </div>
 
       {/* // add a modal for log out */}
-      {deleteModal ? <div className="modal-overlay">
-        <div className="modal">
-          <h4>Are you sure {user?.full_name || ""} you want to logout?</h4>
-          <div className="delete-btns">
-            <button  onClick={()=>handleLogout()}className="logout">Logout</button>
-            <button className="cancel" onClick={()=>setDeleteModal(null)}>Cancel</button>
+      {deleteModal ? (
+        <div className="modal-overlay">
+          <div className="modal">
+            <h4>Are you sure {user?.full_name || ""} you want to logout?</h4>
+            <div className="delete-btns">
+              <button onClick={() => handleLogout()} className="logout">
+                Logout
+              </button>
+              <button className="cancel" onClick={() => setDeleteModal(null)}>
+                Cancel
+              </button>
+            </div>
           </div>
         </div>
-      </div> : null}
+      ) : null}
     </div>
   );
 };
