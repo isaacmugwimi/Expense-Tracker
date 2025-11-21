@@ -1,15 +1,33 @@
 
 .dashboard-section{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
     padding: 20px;
+
 }
     
 
-.main-homepage{
+.homepage-stats{
     display: flex;
     gap: 20px;
     justify-content: space-between;
 } 
 
-.expense-card{
-    background-color: red;
+.homepage-transactions{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
 }
+
+.homepage-transactions> :first-child, .homepage-transactions> :last-child{
+    background-color: white;
+    width: 49%;
+    padding: 10px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    
+}
+

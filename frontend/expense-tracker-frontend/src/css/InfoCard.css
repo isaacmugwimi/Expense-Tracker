@@ -35,7 +35,21 @@
   color: green;
 }
 
-.expense-card{
-    color: white;
+.expense-card {
+    border-left: 5px solid rgba(255, 0, 0, 0.753); /* highlight */
+}
+
+.expense-card .icon-section{
     background-color: red;
+}
+
+.income-card{
+    border-left: 5px solid #FD5E02;
+}
+.income-card .icon-section{
+    background-color:#FD5E02 ;
+}
+
+.balance-card{
+    border-left: 5px solid #7a53f2;
 }

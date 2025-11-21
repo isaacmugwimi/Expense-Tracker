@@ -1,0 +1,27 @@
+.transaction-head{
+    display: flex;
+    justify-content: space-between;
+    /* background-color: red; */
+    align-items: center;
+}
+
+.transaction-head h5{
+    font-size: 16px;
+}
+
+.transaction-head button{
+    padding: 6px 10px;
+    font-weight: 600;
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    border-radius: 5px;
+    background-color: #F6F8FA;
+    border: 1px solid gray;
+    cursor: pointer;
+
+}
+.transaction-head button:hover{
+    background-color: #FD5E02;
+    color: white;
+}
