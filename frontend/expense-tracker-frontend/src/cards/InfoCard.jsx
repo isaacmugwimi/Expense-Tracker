@@ -7,7 +7,7 @@ const InfoCard = ({ icon, label, value, className }) => {
       <div className="icon-section">{icon}</div>
       <div className="stats-info">
         <h6>{label}</h6>
-        <span>${value}</span>
+        <span>Ksh. {value}</span>
       </div>
     </div>
   );

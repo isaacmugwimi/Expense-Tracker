@@ -5,7 +5,7 @@ import moment from "moment";
 // is a popular JavaScript library used for formatting dates, parsing dates, manipulating dates, and displaying dates in a readable format.
 
 import TransactionInfoCard from "../../cards/TransactionInfoCard";
-import "../../css/RecentTransactions.css"
+import "../../css/RecentTransactions.css";
 const RecentTransactions = ({ transactions, onSeeMore }) => {
   return (
     <div className="transaction-card">
@@ -20,7 +20,7 @@ const RecentTransactions = ({ transactions, onSeeMore }) => {
         {transactions?.slice(0, 5)?.map((item) => (
           <TransactionInfoCard
             key={item.id}
-            title={item.type == "expense" ? item.category : item.source}
+            title={item.description}
             icon={item.icon}
             date={moment(item.date).format("Do MMM YYYY")}
             amount={item.amount}

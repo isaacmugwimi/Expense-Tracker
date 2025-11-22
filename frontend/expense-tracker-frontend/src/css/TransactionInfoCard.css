@@ -1,34 +1,99 @@
 .main-section {
   width: 100%;
+  margin-bottom: 15px;
 }
 
 .transaction {
   display: flex;
   align-items: center;
   gap: 15px;
-  padding: 12px;
+  padding: 8px;
   background: white;
   border-radius: 10px;
-  box-shadow: 0 0 4px rgba(0,0,0,0.1);
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
 }
 
-.transaction-icons img,
-.transaction-icons svg {
-  width: 35px;
-  height: 35px;
+.transaction:hover {
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+  /* background-color: #EDEDEC; */
 }
 
-.transaction-data {
-  display: flex;
-  flex-direction: column; 
-  justify-content: space-between;
-  background-color: transparent; /* remove red */
-  padding: 0;
-  gap: 4px; /* small spacing between title, date, and amount */
-}
-
-.transaction-data > div:last-child {
+.transaction-icons {
+  width: 40px;
+  height: 40px;
+  background-color: rgba(0, 0, 0, 0.1);
+  border-radius: 100%;
   display: flex;
   align-items: center;
-  gap: 8px;
+  justify-content: center;
+}
+.transaction-icons img,
+.transaction-icons svg {
+  width: 20px;
+  height: 20px;
+  /* object-fit: cover */
+}
+
+.transaction-left {
+  display: flex;
+  /* flex-direction: column; */
+  justify-content: space-between;
+  padding: 10px;
+  /* align-items: center; */
+  width: 100%;
+  gap: 4px;
+}
+.title-date-section {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.title-date-section .title {
+  font-size: 13px;
+  color: black;
+  font-weight: 600;
+}
+.title-date-section .date {
+  font-size: 12px;
+  color: #555;
+}
+.delete-amount-section {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.delete-amount-section .deletebtn {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 5px;
+  transition: background-color 0.3s, color 0.3s;
+  color:red;
+}
+.delete-amount-section .deletebtn:hover {
+  background-color: #FD5E02;
+  color: white;   
+}
+
+.amount-section {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 17px;
+  
+}
+.green-Background{
+  background-color: #EBFCF2;
+  color: green;
+
+}
+
+.red-Background{
+color: red;
+background-color: #FFEFEE;
 }

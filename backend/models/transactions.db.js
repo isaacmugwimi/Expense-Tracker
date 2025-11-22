@@ -13,7 +13,7 @@ export async function getLast5transactions(userId) {
                 UNION ALL
             SELECT 
                 id,
-                'income' AS type,
+                'expense' AS type,
                 category AS description,
                 amount,
                 date

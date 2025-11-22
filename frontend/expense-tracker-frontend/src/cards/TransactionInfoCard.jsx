@@ -12,7 +12,6 @@ const TransactionInfoCard = ({
   date,
   amount,
   type,
-  hideDeleteBtn,
 }) => {
   return (
     <div className="main-section">
@@ -20,20 +19,24 @@ const TransactionInfoCard = ({
         <div className="transaction-icons">
           {icon ? <img src={icon} alt={title} className="" /> : <LuUtensils />}
         </div>
-        <div className="transaction-data">
-          <div>
-            <p>{title}</p>
-            <p>{date}</p>
+        <div className="transaction-left">
+          <div className="title-date-section">
+            <p className="title">{title}</p>
+            <p className="date">{date}</p>
           </div>
-          <div className="">
-            {!hideDeleteBtn && (
-              <button>
+          <div className="delete-amount-section">
+            {/* {!hideDeleteBtn && ( */}
+              <button className="deletebtn">
                 <LuTrash2 size={18} />
               </button>
-            )}
-            <div className="">
+            {/* )} */}
+            <div
+              className={`amount-section ${
+                type == "income" ? "green-Background" : "red-Background"
+              }`}
+            >
               <h6>
-                {type === "income" ? "+" : "-"}${amount}
+                {type === "income" ? "+" : "-"}Ksh. {amount}
               </h6>
               {type === "income" ? <LuTrendingUp /> : <LuTrendingDown />}
             </div>
